@@ -23,6 +23,7 @@ namespace DotNetModel.WebApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.InnerException?.Message ?? ex.Message);
                 return BadRequest(ex.Message);
             }
         }
