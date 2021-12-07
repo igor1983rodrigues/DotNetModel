@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace DotNetModel.WebApi.Controllers
 {
@@ -15,11 +16,12 @@ namespace DotNetModel.WebApi.Controllers
             _logger = logger;
         }
 
-        protected IActionResult Return<T>(Func<T> func)
+        protected async Task<IActionResult> Return<T>(Func<T> func)
         {
             try
             {
-                return Ok(func());
+                var res = await Task.Run(() => func());
+                return Ok(res);
             }
             catch (Exception ex)
             {

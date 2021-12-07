@@ -2,6 +2,7 @@
 using DotNetModel.DataEntity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace DotNetModel.WebApi.Controllers
 {
@@ -15,19 +16,19 @@ namespace DotNetModel.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Find(string url, string pathLocal, bool? debuggingMode) => Return(() =>
-    {
-        return applicationBusiness.Find(url, pathLocal, debuggingMode);
-    });
+        public Task<IActionResult> Find(string url, string pathLocal, bool? debuggingMode) => Return(() =>
+        {
+            return applicationBusiness.Find(url, pathLocal, debuggingMode);
+        });
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id) => Return(() =>
+        public Task<IActionResult> GetById(int id) => Return(() =>
         {
             return applicationBusiness.GetById(id);
         });
 
         [HttpPost]
-        public IActionResult Add([FromBody] Application body) => Return(() =>
+        public Task<IActionResult> Add([FromBody] Application body) => Return(() =>
         {
             return new
             {
@@ -37,7 +38,7 @@ namespace DotNetModel.WebApi.Controllers
         });
 
         [HttpPatch("{id:int}")]
-        public IActionResult Alter(int id, [FromBody] Application body) => Return(() =>
+        public Task<IActionResult> Alter(int id, [FromBody] Application body) => Return(() =>
         {
             return new
             {
@@ -47,7 +48,7 @@ namespace DotNetModel.WebApi.Controllers
         });
 
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteById(int id) => Return(() =>
+        public Task<IActionResult> DeleteById(int id) => Return(() =>
         {
             applicationBusiness.Delete(id);
             return new { Message = "Application removed!", };
